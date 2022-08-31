@@ -7,7 +7,7 @@ import threading
 CWD = os.path.dirname(os.path.realpath(__file__))
 HOSTKEY = paramiko.RSAKey(filename=os.path.join(CWD, 'test_rsa.key'))
 
-class Server(paramiko.ServerInterface()):
+class Server(paramiko.ServerInterface):
     def __init__(self):
         self.event = threading.Event()
 
@@ -20,7 +20,7 @@ class Server(paramiko.ServerInterface()):
             return paramiko.AUTH_PARTIALLY_SUCCESSFUL
     
 if __name__ == '__main__':
-    server = '127.0.0.1'
+    server = '192.168.1.102'
     ssh_port = 2222
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     bhSession = paramiko.Transport(client)
     bhSession.add_server_key(HOSTKEY)
     server = Server()
-    bhSession.start(servr=server)
+    bhSession.start_server(server=server)
 
     chan = bhSession.accept(20)
     if chan is None:
