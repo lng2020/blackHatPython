@@ -41,7 +41,7 @@ def sniff(host):
     sniffer = socket.socket(socket.AF_INET,
                         socket.SOCK_RAW, socket_protocol)
     sniffer.bind((host, 0))
-    sniffer.setsockopt(socket.SIO_RCVALL, socket.IP_HDRINCL, 1)
+    sniffer.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
 
     if os.name == 'nt':
         sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
@@ -63,5 +63,5 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         host = sys.argv[1]
     else:
-        host = '127.0.0.1'
+        host = '192.168.1.100'
     sniff(host)
